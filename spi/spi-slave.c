@@ -2,23 +2,26 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-// Initialize SPI slave device
+/* Initialize SPI slave device */
 void spi_init_slave()
 {
-	DDRB = (1 << 6);   // MISO as OUTPUT
-	SPCR = (1 << SPE); // Enable SPI
+	/* Configure MISO as output */
+	DDRB |= _BV(DDB6);
+
+	/* Enable SPI */
+	SPCR |= _BV(SPE);
 }
 
-// Send and receive data. Used in both master and slave.
+/* Send and receive data. Used in both master and slave. */
 unsigned char spi_xfer(unsigned char data)
 {
-	// Load data into buffer
+	/* Load data into buffer */
 	SPDR = data;
 
-	// Wait until transmission complete
+	/* Wait until transmission complete */
 	while (!(SPSR & (1 << SPIF)));
 
-	// Return received data
+	/* Return received data */
 	return SPDR;
 }
 
@@ -28,7 +31,7 @@ enum {
 
 int main()
 {
-	/*spi_init_slave();*/
+	spi_init_slave();
 
 	/* set pin 5 of PORTB for output*/
 	DDRB |= _BV(DDB5);
