@@ -2,6 +2,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+
 /* Initialize SPI slave device */
 void spi_init_slave()
 {
@@ -33,16 +34,16 @@ int main()
 {
 	spi_init_slave();
 
-	/* set pin 5 of PORTB for output*/
-	DDRB |= _BV(DDB5);
+	/* set pin 7 of PORTD (Arduino digital I/O pin 7) for output*/
+	DDRD |= _BV(DDD7);
 
 	while(1) {
-		/* set pin 5 high to turn led on */
-		PORTB |= _BV(PORTB5);
+		/* set pin 7 high to turn led on */
+		PORTD |= _BV(PD7);
 		_delay_ms(BLINK_DELAY_MS);
 
-		/* set pin 5 low to turn led off */
-		PORTB &= ~_BV(PORTB5);
+		/* set pin 7 low to turn led off */
+		PORTD &= ~_BV(PD7);
 		_delay_ms(BLINK_DELAY_MS);
 	}
 
